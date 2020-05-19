@@ -1,0 +1,116 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>post</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <br>
+  <div class="container backwhite rounded">
+    <div *ngIf="data.autor == iduser">
+      <button class="btn btn-danger" (click)="ElimModal()">X</button>
+    </div>
+    <div class="chip">
+      <p class="h4" (click)="AuthorPage()">{{data.authorname}}</p>
+    </div>
+      <div class="row " style="justify-content: center;">
+              <div *ngIf="data.category == 'Dibujo-fotografia'">
+                  <div class="media">
+                    <ion-slides class="image-slider imageslide" loop="true" slidesPerView="1">
+                      <ion-slide *ngFor="let img of images">
+                        <img src="{{img.big}}" class="thumb-img"  (click)="ImageExpand(img.big)"/>
+                      </ion-slide>
+                    </ion-slides>
+                    </div>
+                </div>
+            
+              <div *ngIf="data.category == 'Música'">
+                <br>
+                <div class="col">
+                <!--<mat-advanced-audio-player [playlist]="msaapPlaylist" [displayTitle]="msaapDisplayTitle" [autoPlay]="false" 
+                  muted="muted" [displayPlaylist]="msaapDisplayPlayList" [pageSizeOptions]="msaapPageSizeOptions" 
+                  [displayVolumeControls]="true" [expanded]="false">
+                </mat-advanced-audio-player> -->
+              </div>
+              </div>
+              <div *ngIf="data.category == 'Video'">
+                <div class="col">
+                  <h4>{{tituloActual}}</h4>
+                </div>
+                
+              <div class="col">
+                  <div class="media">
+                  <video width="420" height="240"  [(src)]="VideoActual" controls>
+                  </video>
+                </div>
+              </div>
+              <div class="col">
+                <div class="scroll">  
+                  <ul class="list-group list-group-flush">
+                  <div *ngFor="let vid of srcVideo">    
+                    <li class="list-group-item btn btn-primary" (click)="ChangeVideo(vid)">{{vid.title}}</li>
+                  </div>
+                </ul>
+                </div>
+              </div>
+              </div>      
+      </div>
+      <div class="row backwhite">
+        <div class="col-4"></div>
+        <div class="col-4">
+          <h2>{{data.titulo}}</h2>
+          <p>{{data.texto}}</p>
+        <div *ngIf="data.autor != iduser">
+          <ion-item>
+            <ion-label>Puntuación</ion-label>
+            <ion-select placeholder="Puntuación" [ngModel]="rate">
+              <ion-select-option value="1">1</ion-select-option>
+              <ion-select-option value="2">2</ion-select-option>
+              <ion-select-option value="3">3</ion-select-option>
+              <ion-select-option value="4">4</ion-select-option>
+              <ion-select-option value="5">5</ion-select-option>
+            </ion-select>
+          </ion-item>
+            <button class="btn btn-primary" (click)="Puntuar()">Puntuar</button>
+        </div>
+      </div>
+      <div class="col-4">
+      </div>
+      </div>
+      <br>
+      <div *ngIf="auth" class="col backwhite rounded" style="justify-content: center;">
+        <!--<input [(ngModel)]="comentario" type="text" name="comentario" id="comentario">-->
+        <textarea class="form-control" id="txarea" [(ngModel)]="comentario" rows="3"></textarea>
+        <button class="btn btn-primary" (click)="Comentar()">Comentar</button>
+      </div>
+      <div *ngIf="!auth" class="row backwhite rounded">
+        <h3>Logeate para poder comentar</h3>
+      </div>
+      <br>
+      <hr>
+      <div *ngFor="let com of data.coments;let i = index">
+        <div class="row">
+          <div class="col-lg-1">
+            <img src="{{com.icono}}" class="rounded-circle z-depth-0 coment-icon"
+            data-toggle="dropdown" alt="avatar image" height="35">
+          </div>
+          <div class="col-lg-11">
+            <h3>{{com.name}}</h3>
+          </div>
+    
+        </div>
+        <br>
+    
+        <div class="row">
+          <div class="col-lg-1"></div>
+          <div class="col-lg-9">
+            <p>{{com.coment}}</p>
+          </div>
+          <div class="col-lg-2" *ngIf="com.id == iduser">
+            <button class="btn btn-danger" type="button" (click)="Eliminar(i)">Eliminar</button>
+          </div>
+        </div>
+        <hr>
+  </div>
+  </div>
+</ion-content>
