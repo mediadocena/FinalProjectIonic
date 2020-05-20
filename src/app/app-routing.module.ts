@@ -11,6 +11,9 @@ const routes: Routes = [
     path: 'post/:id',
    loadChildren: () => import('./Pages/post/post.module').then( m => m.PostPageModule)
   },
+  {path:'login',
+  loadChildren: () => import('./Pages/login/login.module').then( m => m.LoginPageModule)
+  },
   {
     path: '',
     redirectTo: 'home',

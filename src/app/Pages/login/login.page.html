@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <br>
+  <form class="text-center border border-dark rounded p-5 block backwhite">
+  
+      <p class="h4 mb-4">Log in</p>
+  
+      <!-- Email -->
+      <input [(ngModel)]="email" [ngModelOptions]="{standalone: true}" type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail">
+  
+      <!-- Password -->
+      <input [(ngModel)]="password" [ngModelOptions]="{standalone: true}" type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password">
+  
+      <!-- Sign in button -->
+      <button class="btn btn-info btn-block my-4" (click)='login()' type="submit">Sign in</button>
+  
+      <!-- Register -->
+      <p>Not a member?
+          <a href="/signin">Register</a>
+      </p>
+  
+  </form>
+</ion-content>

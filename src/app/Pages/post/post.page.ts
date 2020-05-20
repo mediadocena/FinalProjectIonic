@@ -9,8 +9,56 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class PostPage implements OnInit {
 
-  constructor(private post:PostService,private route: ActivatedRoute,private router:Router) { }
-  data;
+  constructor(private post:PostService,private route: ActivatedRoute,private router:Router) { 
+    this.isloaded = false;
+  }
+  data = {
+    _id
+:{$oid:""},
+titulo
+:
+"",
+archivo
+:
+[],
+texto
+:
+"",
+autor
+:
+"",
+authorname
+:
+"",
+coments
+:
+[],
+points
+:
+[],
+category
+:
+"",
+tags
+:
+[],
+totalpoints
+:
+0,
+totalcoments
+:
+0,
+mediapoints
+:
+0,
+authorname_lower
+:
+"",
+titulo_lower
+:
+""
+  };
+  isloaded:boolean;
   rate;
   auth = false;
   comentario;
@@ -27,8 +75,9 @@ export class PostPage implements OnInit {
       this.iduser = JSON.parse(localStorage.getItem('token'))._id.$oid;
     }
     this.post.GetPost(this._id).subscribe((data:any)=>{
+      console.log('AAAAAAAAAAAAAAAAA',data)
       this.data = data;
-
+      
       switch (data.category) {
         case 'Música':
           //this.msaapPlaylist = data.archivo;
@@ -56,8 +105,8 @@ export class PostPage implements OnInit {
         this.VideoActual = data.archivo[0].link;
       }*/
 
-      if(this.data.points != ""){
-        this.points = this.data.points;
+      if(data.points != ""){
+        this.points = data.points;
         this.points.forEach((val,index)=>{
           if(val.id == this.iduser){
             this.rate = val.rate;
@@ -66,9 +115,13 @@ export class PostPage implements OnInit {
       }else{
         this.points = [];
       }
+      this.load();
     },(err)=>{
       this.router.navigate(['Home']);
     });
+  }
+  load(){
+    this.isloaded = true;
   }
   Puntuar(){
     if(localStorage.getItem('token'))
