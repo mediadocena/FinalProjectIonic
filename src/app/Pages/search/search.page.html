@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    <ion-title>Search</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <form class="form-inline d-flex justify-content-center md-form form-sm active-purple active-purple-2 mt-2">
+      <ion-label>Filtro</ion-label>
+        <ion-select [(ngModel)]="filter" [ngModelOptions]="{standalone: true}">
+          <ion-select-option value="authorname_lower">Autor</ion-select-option>
+          <ion-select-option value="titulo_lower">Titulo</ion-select-option>
+          <ion-select-option value="tags">Tag</ion-select-option>
+        </ion-select>
+        
+        <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
+          aria-label="Search" [(ngModel)]="searchArgs" [ngModelOptions]="{standalone: true}">
+          <i class="fas fa-search" aria-hidden="true"></i>
+          <button class="btn btn-primary" (click)="Buscar(searchArgs)">Buscar</button>
+          
+      </form>
+      <div class="row">
+
+        <div class="col-lg-12 col-sm-5 col-md-10">
+          <div class="row">
+              <div class="col-lg-4 col-md-10" *ngFor="let item of data; index as i">
+          <!-- Grid column -->
+          <!--Card Primary-->
+          <a routerLink="/post/{{item._id.$oid}}">
+            <ion-card class="text-center contentcenter">
+              <div  *ngIf="item.category == 'Dibujo-fotografia'">
+                <div class="media">
+                  <img  class="img-fluid card-img-top homecard" alt ="" src={{item.archivo[0].big}}>
+                </div>
+              </div>
+              <div *ngIf="item.category == 'Video'">
+                <div class="media homecard">
+                  <video  class="img-fluid card-img-top homecard" width="250" height="140" controls >
+                    <source  src={{item.archivo[0].link}} type="video/mp4">
+                  </video>
+                </div>
+              </div>
+              <div *ngIf="item.category == 'Música'">
+                <div class="media">
+                  <img  class="img-fluid card-img-top musicIcon" alt ="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Noun_project_-_Music_notes.svg/1200px-Noun_project_-_Music_notes.svg.png">
+                </div>
+              </div>
+              <ion-card-header>
+                <ion-card-title>{{item.titulo}}</ion-card-title>
+                <ion-card-subtitle>
+                  <p class="white-text mb-0">Autor: {{item.authorname}}</p>
+                  <div class="text-center" *ngFor="let tags of item.tags">
+                    <span class="badge badge-pill badge-success">{{tags}}</span>
+                  </div>
+                </ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content>
+                {{item.texto}}
+                <p class="white-text mb-0"><i class="far fa-star"></i>{{item.mediapoints}}&#9;<i class="far fa-comment"></i> {{item.totalcoments}}</p>
+              </ion-card-content>
+            </ion-card>
+          </a>
+          <!--/.Card Primary-->
+          <br>
+        </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</ion-content>

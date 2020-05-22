@@ -30,11 +30,21 @@
               <div *ngIf="data.category == 'Música'">
                 <br>
                 <div class="col">
-                <!--<mat-advanced-audio-player [playlist]="msaapPlaylist" [displayTitle]="msaapDisplayTitle" [autoPlay]="false" 
-                  muted="muted" [displayPlaylist]="msaapDisplayPlayList" [pageSizeOptions]="msaapPageSizeOptions" 
-                  [displayVolumeControls]="true" [expanded]="false">
-                </mat-advanced-audio-player> -->
+                  <h4>{{tituloaudioactual}}</h4>
+                </div>
+                <div class="media">
+                  <audio width="420" height="240"  [(src)]="audioactual" controls>
+                  </audio>
+                </div>
               </div>
+              <div class="col">
+                <div class="scroll">  
+                  <ul class="list-group list-group-flush">
+                  <div *ngFor="let aud of audios">    
+                    <li class="list-group-item btn btn-primary" (click)="ChangeAudio(aud)">{{aud.title}}</li>
+                  </div>
+                </ul>
+                </div>
               </div>
               <div *ngIf="data.category == 'Video'">
                 <div class="col">

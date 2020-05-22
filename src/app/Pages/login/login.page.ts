@@ -10,13 +10,15 @@ import Swal from 'sweetalert2';
 })
 export class LoginPage implements OnInit {
 
-  constructor(private user:UserService,private router:Router) { }
-  email;
-  password;
-  ngOnInit() {
+  constructor(private user:UserService,private router:Router) {
     if(localStorage.getItem('token')){
       this.router.navigate(['/home']);
     }
+   }
+  email;
+  password;
+  ngOnInit() {
+    
   }
   login(){
     this.user.login(this.email,this.password).subscribe((data:any) => {

@@ -7,7 +7,7 @@ export class AuthGuardService implements CanActivate {
   canActivate(): boolean {
     //Si el token está caducado, devuelve a Home
     if (!this.auth.isAuthenticated()) {
-      this.router.navigate(['/Home']);
+      this.router.navigate(['/login']);
       return false;
     }
     return true;

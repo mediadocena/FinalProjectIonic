@@ -11,6 +11,7 @@ export class PostPage implements OnInit {
 
   constructor(private post:PostService,private route: ActivatedRoute,private router:Router) { 
     this.isloaded = false;
+
   }
   data = {
     _id
@@ -66,6 +67,9 @@ titulo_lower
   srcVideo;
   VideoActual;
   tituloActual;
+  audios;
+  audioactual;
+  tituloaudioactual;
   points:any[];
   _id = this.route.snapshot.paramMap.get('id');
   images;
@@ -80,7 +84,9 @@ titulo_lower
       
       switch (data.category) {
         case 'Música':
-          //this.msaapPlaylist = data.archivo;
+          this.audios = data.archivo;
+          this.audioactual = data.archivo[0].link;
+          this.tituloActual = data.archivo[0].title;
           break;
           case 'Dibujo-fotografia':
            this.images = data.archivo;
@@ -216,6 +222,10 @@ titulo_lower
   ChangeVideo(vid){
     this.VideoActual = vid.link;
     this.tituloActual = vid.title;
+  }
+  ChangeAudio(aud){
+    this.audioactual = aud.link;
+    this.tituloaudioactual = aud.title;
   }
   AuthorPage(){
     this.router.navigate(['portfolio/'+this.data.autor])

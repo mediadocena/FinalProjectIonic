@@ -23,7 +23,7 @@ export class IsloggedService implements CanActivate {
       }
       bol = true;
     }else{
-      this.router.navigate(['/Home']);
+      this.router.navigate(['/login']);
       bol = false;
     }
   return bol;

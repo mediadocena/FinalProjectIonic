@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    <ion-title>User Settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <br>
+<div class="container backwhite rounded">
+    <div class="row">
+            <img class="icon rounded-circle" style="margin-top: 10px; margin-left: 10px;" src="{{data.icon}}" alt="">
+        <div class="col">
+            <h2>{{data.name}}</h2>
+            <h4>{{data.mail}}</h4>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-2">
+
+        </div>
+        <div class="col">
+            <div class="row">
+                <button (click)="onFileSelect()" class="btn btn-primary">Cambiar Icono</button>
+            </div>
+        </div>
+    </div>    
+    <br>
+    <div class="row">
+        <div class="col-2">
+
+        </div>
+        <div class="col">
+            <div class="row">
+                <button class="btn btn-primary" (click)="CambiarNick()">Cambiar Nick</button>
+                <button class="btn btn-primary" (click)="CambiarContrasena()">Cambiar Contraseña</button>
+            </div>
+        </div>
+    </div>
+</div>
+</ion-content>

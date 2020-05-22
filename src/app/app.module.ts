@@ -12,6 +12,9 @@ import { PostService } from './Services/post.service';
 import { UserService } from './Services/user.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { IsloggedService } from './Services/islogged.service';
+import { AuthService } from './Services/auth.service';
+import { AuthGuardService } from './Services/authguard.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,6 +31,9 @@ import { CommonModule } from '@angular/common';
     SplashScreen,
     PostService,
     UserService,
+    IsloggedService,
+    AuthService,
+    AuthGuardService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
