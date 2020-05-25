@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    <ion-title>portfolio</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <!-- Section -->
+    
+    <section>
+  
+      <h6 class="font-weight-bold text-center text-uppercase small mb-4">portfolio</h6>
+      <h3 class="font-weight-bold text-center pb-2">{{username}}</h3>
+      <div class="text-center rounded-circle">
+        <img class="icon rounded-circle" src="{{icon}}" alt="">
+      </div>
+      <hr class="w-header my-4">
+  
+      <!-- Grid row -->
+      <div class="row">
+  
+        <!-- Grid column -->
+        <div class="col black-text d-flex justify-content-center mb-5">
+          <button type="button" class="btn btn-flat btn-white btn-lg m-0 px-3 py-1 filter" data-rel="all" (click)="Reset()">Todo</button>
+          <p class="font-weight-bold mb-0 px-1 py-1">/</p>
+          <button type="button" class="btn btn-flat btn-black btn-lg m-0 px-3 py-1 filter" data-rel="all" (click)="Imagenes()">Dibujo/Fotografías</button>
+          <p class="font-weight-bold mb-0 px-1 py-1">/</p>
+          <button type="button" class="btn btn-flat btn-lg btn-black m-0 px-3 py-1 filter" data-rel="1" (click)="Videos()">Videos</button>
+          <p class="font-weight-bold mb-0 px-1 py-1">/</p>
+          <button type="button" class="btn btn-flat btn-lg btn-black m-0 px-3 py-1 filter" data-rel="2" (click)="Musica()">Musica</button>
+  
+        </div>
+        <!-- Grid column -->
+  
+      </div>
+      <!-- Grid row -->
+  <!-------------------------------------------------------------------------------------> 
+  <!-- Grid row -->
+  <div class="gallery mb-5" id="gallery">
+    <div *ngFor="let dat of data index as i">
+    <!-- Grid column -->
+    <div class="mb-3 pics all 2 animation">
+      <a   routerLink='/post/{{data[i]._id.$oid}}'>
+        <div *ngIf="dat.category=='Dibujo-fotografia'">
+          <div class="view">
+            <img class="img-fluid z-depth-1 rounded" src={{dat.archivo[0].big}} alt="Card image cap">
+            <div class="mask flex-center waves-effect waves-light rgba-black-slight">
+              <p class="white-text"><b>{{dat.titulo}}</b></p>
+            </div>
+          </div>
+          
+        </div>
+        <div *ngIf="dat.category!='Dibujo-fotografia'">
+          <div class="view">
+            <img class="img-fluid z-depth-1 rounded" src="https://i.etsystatic.com/10919371/r/il/155a7d/1563938723/il_570xN.1563938723_1rmr.jpg" alt="">
+            <div class="mask flex-center waves-effect waves-light rgba-black-slight">
+              <div class="bgdark">
+              <p class="white-text"><b>{{dat.titulo}}</b></p>
+            </div>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- Grid column -->
+  </div>
+ 
+  </div>
+    </section>
+    <!-- Section -->
+  
+  </div>
+</ion-content>

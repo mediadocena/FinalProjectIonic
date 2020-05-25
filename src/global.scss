@@ -53,3 +53,23 @@ ion-slide.swiper-slide {
     width: 80px;
     height: 80px;
 }
+video{
+    width: 100%;
+    height: auto;
+}
+.wider{
+    width: 100%;
+    height: auto;
+}
+.backwhite{
+    background-color: white;
+}
+.scroll{
+    overflow: scroll;
+}
+@media (orientation: landscape) and (max-width: 850px){
+    .homeLandscape{
+        width: 500px;
+        height: auto;
+    }
+}

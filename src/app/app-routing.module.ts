@@ -36,9 +36,11 @@ const routes: Routes = [
     loadChildren: () => import('./Pages/user/user.module').then( m => m.UserPageModule)
   },
   {
-    path: 'search',
-    loadChildren: () => import('./Pages/search/search.module').then( m => m.SearchPageModule)
+    path: 'portfolio/:id',
+    loadChildren: () => import('./Pages/portfolio/portfolio.module').then( m => m.PortfolioPageModule),
+    canActivate:[AuthGuardService]
   }
+
 
   
 

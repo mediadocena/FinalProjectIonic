@@ -62,7 +62,7 @@ titulo_lower
   isloaded:boolean;
   rate;
   auth = false;
-  comentario;
+  comentario='';
   iduser;
   srcVideo;
   VideoActual;
@@ -164,18 +164,22 @@ titulo_lower
     }
   }
   Comentar(){
-    this.data.coments.push({
-      "id":this.iduser,
-      "coment":this.comentario,
-      "icono":JSON.parse(localStorage.getItem("token")).icon,
-      "name":JSON.parse(localStorage.getItem("token")).name
-    })
-    this.post.Update(this.data).subscribe((data)=>{
-      console.log(data);
-      this.comentario='';
-    },(err)=>{
-      console.log(err);
-    })
+    if(this.comentario == '' || this.comentario == null || this.comentario == undefined){
+      return false;
+    }else{
+      this.data.coments.push({
+        "id":this.iduser,
+        "coment":this.comentario,
+        "icono":JSON.parse(localStorage.getItem("token")).icon,
+        "name":JSON.parse(localStorage.getItem("token")).name
+      })
+      this.post.Update(this.data).subscribe((data)=>{
+        console.log(data);
+        this.comentario='';
+      },(err)=>{
+        console.log(err);
+      })
+    }
   }
   Eliminar(id){
     this.data.coments.splice(id,1);

@@ -42,6 +42,11 @@ this.navigate =
         icon:"search-outline"
       },
       {
+        title:'Portfolio',
+        url:`/portfolio/${JSON.parse(localStorage.getItem('token'))._id.$oid}`,
+        icon:'book-outline'
+      },
+      {
         title : "User",
         url   : "/user",
         icon  : "person-outline"
