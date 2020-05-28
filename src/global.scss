@@ -24,10 +24,46 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+body {
+
+    /* Ubicación de la imagen */
+    
+    background-image: url('../www/img/cool-background.png');
+    
+    /* Para dejar la imagen de fondo centrada, vertical y
+    
+    horizontalmente */
+    
+    background-position: center center;
+    
+    /* Para que la imagen de fondo no se repita */
+    
+    background-repeat: no-repeat;
+    
+    /* La imagen se fija en la ventana de visualización para que la altura de la imagen no supere a la del contenido */
+    
+    background-attachment: fixed;
+    
+    /* La imagen de fondo se reescala automáticamente con el cambio del ancho de ventana del navegador */
+    
+    background-size: cover;
+    
+    /* Se muestra un color de fondo mientras se está cargando la imagen
+    
+    de fondo o si hay problemas para cargarla */
+    
+    background-color: cadetblue;
+    
+    }
+    ion-content {
+        --background: none;
+      }
 ion-slide.swiper-slide {
     left: 25%;
 }
-
+.backdark{
+    background-color: rgba(19, 17, 17, 0.719);
+}
 .slide-zoom {
     background: #e6e6e6;
 }
@@ -67,6 +103,7 @@ video{
 .scroll{
     overflow: scroll;
 }
+
 @media (orientation: landscape) and (max-width: 850px){
     .homeLandscape{
         width: 500px;

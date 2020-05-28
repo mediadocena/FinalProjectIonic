@@ -12,12 +12,18 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 export class AppComponent {
 
   navigate;
-
+  _id = null;
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
   ) {
+    if(localStorage.getItem('token')){
+      this._id =  JSON.parse(localStorage.getItem('token'))._id.$oid;
+    }else{
+      this._id = null;
+    }
+    
     this.sideMenu();
     this.initializeApp();
   }
@@ -43,7 +49,7 @@ this.navigate =
       },
       {
         title:'Portfolio',
-        url:`/portfolio/${JSON.parse(localStorage.getItem('token'))._id.$oid}`,
+        url:`/portfolio/${this._id}`,
         icon:'book-outline'
       },
       {
