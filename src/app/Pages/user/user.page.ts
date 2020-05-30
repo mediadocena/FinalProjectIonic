@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import { UserService } from 'src/app/Services/user.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { api } from 'src/Const/const';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 @Component({
   selector: 'app-user',
@@ -11,10 +12,18 @@ import { api } from 'src/Const/const';
 })
 export class UserPage implements OnInit {
 
-  constructor(private user:UserService,private formBuilder:FormBuilder) { 
+  constructor(private user:UserService,private formBuilder:FormBuilder,private camera: Camera) { 
   }
   data;
   uploadForm:FormGroup;
+
+  options: CameraOptions = {
+    quality: 100,
+    destinationType: this.camera.DestinationType.FILE_URI,
+    encodingType: this.camera.EncodingType.JPEG,
+    mediaType: this.camera.MediaType.PICTURE
+  }
+
   ngOnInit() {
     this.GetAll();
     this.uploadForm = this.formBuilder.group({
@@ -99,7 +108,39 @@ export class UserPage implements OnInit {
     })
   }
   async onFileSelect(){
-    const { value: file } = await Swal.fire({
+
+    this.camera.getPicture(this.options).then((imageData) => {
+      const formdata = new FormData();
+      const reader = new FileReader();
+      this.uploadForm.get('file').setValue(imageData);
+      formdata.append('file',this.uploadForm.get('file').value);
+      formdata.append('filename',this.uploadForm.get('filename').value);
+      this.user.UploadUserImg(formdata).subscribe((data)=>{
+        this.data.icon = `${api}download/${this.data._id.$oid}`
+        localStorage.setItem('token',JSON.stringify(this.data));
+        this.user.UpdateIcon(this.data).subscribe((data)=>{
+          reader.onload = (e:any) => {
+            Swal.fire({
+              title: 'Tu nuevo icono',
+              imageUrl: e.target.result,
+              imageAlt: 'Tu nuevo icono'
+            })
+          }
+          reader.readAsDataURL(imageData)
+        },(err)=>{
+          Swal.fire({
+            icon:'error',
+            title:'Error al modificar icono',
+            html:`${err}`,
+            confirmButtonText:'Aceptar'
+          })
+        });
+
+     }, (err) => {
+      // Handle error
+     });
+
+   /* const { value: file } = await Swal.fire({
       title: 'Seleccione una imagen:',
       input: 'file',
       inputAttributes: {
@@ -143,7 +184,8 @@ export class UserPage implements OnInit {
           confirmButtonText:'Aceptar'
         })
       });
-    }
+    }*/
+  });
   }
   BorrarImg(){
     let name = this.data.icon.substr(this.data.icon.lastIndexOf('/') + 1)
