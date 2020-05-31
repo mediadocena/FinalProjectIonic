@@ -4,22 +4,23 @@ import { UserService } from 'src/app/Services/user.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { api } from 'src/Const/const';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-
+import {File,IWriteOptions,FileEntry} from '@ionic-native/file/ngx'
 @Component({
   selector: 'app-user',
   templateUrl: './user.page.html',
   styleUrls: ['./user.page.scss'],
 })
 export class UserPage implements OnInit {
+  uploadService: any;
 
-  constructor(private user:UserService,private formBuilder:FormBuilder,private camera: Camera) { 
+  constructor(private file:File,private user:UserService,private formBuilder:FormBuilder,private camera: Camera) { 
   }
   data;
   uploadForm:FormGroup;
 
   options: CameraOptions = {
     quality: 100,
-    destinationType: this.camera.DestinationType.FILE_URI,
+    destinationType: this.camera.DestinationType.DATA_URL,
     encodingType: this.camera.EncodingType.JPEG,
     mediaType: this.camera.MediaType.PICTURE
   }
@@ -107,86 +108,34 @@ export class UserPage implements OnInit {
       }
     })
   }
-  async onFileSelect(){
-
-    this.camera.getPicture(this.options).then((imageData) => {
-      const formdata = new FormData();
-      const reader = new FileReader();
-      this.uploadForm.get('file').setValue(imageData);
-      formdata.append('file',this.uploadForm.get('file').value);
-      formdata.append('filename',this.uploadForm.get('filename').value);
-      this.user.UploadUserImg(formdata).subscribe((data)=>{
-        this.data.icon = `${api}download/${this.data._id.$oid}`
-        localStorage.setItem('token',JSON.stringify(this.data));
-        this.user.UpdateIcon(this.data).subscribe((data)=>{
-          reader.onload = (e:any) => {
-            Swal.fire({
-              title: 'Tu nuevo icono',
-              imageUrl: e.target.result,
-              imageAlt: 'Tu nuevo icono'
-            })
-          }
-          reader.readAsDataURL(imageData)
-        },(err)=>{
-          Swal.fire({
-            icon:'error',
-            title:'Error al modificar icono',
-            html:`${err}`,
-            confirmButtonText:'Aceptar'
-          })
-        });
-
-     }, (err) => {
-      // Handle error
-     });
-
-   /* const { value: file } = await Swal.fire({
-      title: 'Seleccione una imagen:',
-      input: 'file',
-      inputAttributes: {
-        'accept': 'image/*',
-        'aria-label': 'Subir tu nuevo icono:'
+  readFile(file: any) {
+      
+      alert(file)
+      let formData = {
+        "file":file,
+        "filename":this.data._id.$oid
       }
-    })
-    if (file) {
-      const formdata = new FormData();
-      const reader = new FileReader();
-      this.uploadForm.get('file').setValue(file);
-      formdata.append('file',this.uploadForm.get('file').value);
-      formdata.append('filename',this.uploadForm.get('filename').value);
-      //this.BorrarImg();
-      this.user.UploadUserImg(formdata).subscribe((data)=>{
-        //this.data.icon = `${api}download/${this.data._id.$oid}.${file.name.substr(file.name.lastIndexOf('.') + 1)}`;
+      alert(formData.file)
+      alert(formData.filename)
+      this.user.UploadUserImg(formData).subscribe((data) => {
         this.data.icon = `${api}download/${this.data._id.$oid}`
         localStorage.setItem('token',JSON.stringify(this.data));
-        this.user.UpdateIcon(this.data).subscribe((data)=>{
-          reader.onload = (e:any) => {
-            Swal.fire({
-              title: 'Tu nuevo icono',
-              imageUrl: e.target.result,
-              imageAlt: 'Tu nuevo icono'
-            })
-          }
-          reader.readAsDataURL(file)
-        },(err)=>{
-          Swal.fire({
-            icon:'error',
-            title:'Error al modificar icono',
-            html:`${err}`,
-            confirmButtonText:'Aceptar'
-          })
-        })
       },(err)=>{
-        Swal.fire({
-          icon:'error',
-          title:'Error al subir icono',
-          html:`${err}`,
-          confirmButtonText:'Aceptar'
-        })
+        alert('error'+err.error.msg)
+        alert('error'+err.error.error)
       });
-    }*/
-  });
+  
+
   }
+
+  takePicture() {
+    this.camera.getPicture(this.options).then((imageData) => {
+      this.readFile(imageData);
+    }, (err) => {
+      alert('Error')
+    });
+  }
+
   BorrarImg(){
     let name = this.data.icon.substr(this.data.icon.lastIndexOf('/') + 1)
     console.log(name)

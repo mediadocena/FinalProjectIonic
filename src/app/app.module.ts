@@ -16,7 +16,7 @@ import { IsloggedService } from './Services/islogged.service';
 import { AuthService } from './Services/auth.service';
 import { AuthGuardService } from './Services/authguard.service';
 import { Camera } from '@ionic-native/camera/ngx';
-
+import {File} from '@ionic-native/file/ngx'
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -36,6 +36,7 @@ import { Camera } from '@ionic-native/camera/ngx';
     AuthService,
     AuthGuardService,
     Camera,
+    File,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
