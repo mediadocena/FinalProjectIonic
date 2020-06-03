@@ -17,13 +17,16 @@ export class PortfolioPage implements OnInit {
   fulldata;
   username;
   icon;
+  description;
+  titulos;
   _id = this.route.snapshot.paramMap.get("id");
+  actualid= JSON.parse(localStorage.getItem('token'))._id.$oid
   ngOnInit() {
-    if(localStorage.getItem('token')){
-      if(this._id == JSON.parse(localStorage.getItem('token'))._id.$oid){
+    if(localStorage.getItem('token') && this._id == this.actualid){
         this.username = JSON.parse(localStorage.getItem('token')).name;
         this.icon = JSON.parse(localStorage.getItem('token')).icon;
-      }
+        this.description = JSON.parse(localStorage.getItem('token')).banner;
+        this.titulos = JSON.parse(localStorage.getItem('token')).category; 
   }else{
       this.user.obtenerUsuarioID(this._id).subscribe((data:any)=>{
         this.username = data.name;

@@ -4,7 +4,7 @@ import { UserService } from 'src/app/Services/user.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { api } from 'src/Const/const';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import {File,IWriteOptions,FileEntry} from '@ionic-native/file/ngx'
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.page.html',
@@ -13,7 +13,7 @@ import {File,IWriteOptions,FileEntry} from '@ionic-native/file/ngx'
 export class UserPage implements OnInit {
   uploadService: any;
 
-  constructor(private file:File,private user:UserService,private formBuilder:FormBuilder,private camera: Camera) { 
+  constructor(private user:UserService,private formBuilder:FormBuilder,private camera: Camera) { 
   }
   data;
   uploadForm:FormGroup;
@@ -115,14 +115,26 @@ export class UserPage implements OnInit {
         "file":file,
         "filename":this.data._id.$oid
       }
-      alert(formData.file)
-      alert(formData.filename)
       this.user.UploadUserImg(formData).subscribe((data) => {
         this.data.icon = `${api}download/${this.data._id.$oid}`
         localStorage.setItem('token',JSON.stringify(this.data));
+        Swal.fire({
+          icon:'success',
+          title: 'Icono cambiado',
+          html: `
+            Se ha cambiado el icono
+          `,
+          confirmButtonText: 'Aceptar'
+        })
       },(err)=>{
-        alert('error'+err.error.msg)
-        alert('error'+err.error.error)
+        Swal.fire({
+          icon:'error',
+          title: 'Error',
+          html: `
+            Ha ocurrido un error al cambiar el icono
+          `,
+          confirmButtonText: 'Aceptar'
+        })
       });
   
 

@@ -18,7 +18,9 @@ export class LoginPage implements OnInit {
   email;
   password;
   ngOnInit() {
-    
+    if(localStorage.getItem('token')){
+      this.router.navigate(['/home']);
+    }
   }
   login(){
     this.user.login(this.email,this.password).subscribe((data:any) => {
