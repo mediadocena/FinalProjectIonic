@@ -4,6 +4,7 @@ import { UserService } from 'src/app/Services/user.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { api } from 'src/Const/const';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { PostService } from 'src/app/Services/post.service';
 
 @Component({
   selector: 'app-user',
@@ -13,9 +14,10 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 export class UserPage implements OnInit {
   uploadService: any;
 
-  constructor(private user:UserService,private formBuilder:FormBuilder,private camera: Camera) { 
+  constructor(private user:UserService,private formBuilder:FormBuilder,private camera: Camera,private post:PostService) { 
   }
   data;
+  oldname;
   uploadForm:FormGroup;
 
   options: CameraOptions = {
@@ -35,6 +37,7 @@ export class UserPage implements OnInit {
 
   GetAll(){
     this.data = JSON.parse(localStorage.getItem('token'));
+    this.oldname = this.data.name;
   }
   async CambiarNick(){
     const { value: nick } = await Swal.fire({
@@ -52,6 +55,11 @@ export class UserPage implements OnInit {
       this.data.name = nick;
       this.user.Update(this.data).subscribe((data)=>{
         localStorage.setItem('token',JSON.stringify(this.data));
+        let dat = {
+          'newname':this.data.name,
+          'oldname':this.oldname
+        }
+        this.post.UpdateAuthorname(dat).subscribe();
         Swal.fire(`Tu nuevo nick es: ${nick}`,'success');
       },(err)=>{
         Swal.fire('Eror al cambiar nick','error');

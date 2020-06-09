@@ -54,5 +54,8 @@ export class PostService {
   GetByCategory(cat){
     return this.httpClient.get(`${api}category/${cat}`);
   }
+  UpdateAuthorname(data){
+    return this.httpClient.put(`${api}updatePostAuthor`,data);
+  }
   
 }
