@@ -69,7 +69,7 @@ export class UserPage implements OnInit {
   }
   CambiarContrasena(){
     Swal.mixin({
-      input: 'text',
+      input: 'password',
       confirmButtonText: 'Siguiente &rarr;',
       showCancelButton: true,
       progressSteps: ['1', '2']
