@@ -25,7 +25,9 @@ const routes: Routes = [
   loadChildren: () => import('./Pages/search/search.module').then( m => m.SearchPageModule),
   canActivate:[AuthGuardService]
   },
-  
+  {path:'register',
+  loadChildren: () => import('./Pages/register/register.module').then( m => m.RegisterPageModule)
+  },
   {
     path: '',
     redirectTo: '/login',
@@ -39,7 +41,12 @@ const routes: Routes = [
     path: 'portfolio/:id',
     loadChildren: () => import('./Pages/portfolio/portfolio.module').then( m => m.PortfolioPageModule),
     canActivate:[AuthGuardService]
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./Pages/register/register.module').then( m => m.RegisterPageModule)
   }
+
 
 
   
